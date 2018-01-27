@@ -10,7 +10,21 @@ namespace GlobalGameJam2018Networking
 {
     public class PipesNetwork : NetworkBase
     {
+        public string Username { get; private set; }
+
         public override event Action<string> ReceivedMessage;
+
+        /// <summary>Called when the connection to the other game was established. The username of the other player is given as event argument.</summary>
+        public event Action<string> AlchemistConnected;
+
+        /// <summary>Called if the connection to the other game was lost.</summary>
+        public event Action AlchemistDisconnected;
+
+        /// <summary>Called when a moneymaker product was received from the alchemist.</summary>
+        public event Action<MoneyMaker, Pipe> ReceivedMoneyMaker;
+
+        /// <summary>Called when the alchemist finished the level. The bool argument is true for success and false for failure.</summary>
+        public event Action<bool> GameOver;
 
         private object monitor = new object();
 
@@ -25,10 +39,25 @@ namespace GlobalGameJam2018Networking
             lock (monitor)
             {
                 if (tcpListener != null) { throw new InvalidOperationException($"Can't start {nameof(PipesNetwork)} multiple times"); }
+                Username = username;
                 tcpListener = new TcpListener(IPAddress.Any, port);
                 tcpListener.Start();
                 tcpListener.BeginAcceptTcpClient(AcceptClient, null);
             }
+        }
+
+        public void Stop()
+        {
+            lock (monitor)
+            {
+                try
+                {
+                    if (tcpClient?.Connected ?? false) { tcpClient?.GetStream()?.Close(); }
+                    tcpListener?.Stop();
+                }
+                catch (Exception) { } // <- Ugly game jam code
+            }
+
         }
 
         private void AcceptClient(IAsyncResult result)
@@ -42,11 +71,14 @@ namespace GlobalGameJam2018Networking
                     {
                         tcpClient = tcpListener.EndAcceptTcpClient(result);
                         stream = tcpClient.GetStream();
+                        SendMessage(new WelcomeAlchemistIAm(Username));
                     }
                     Handle(ReadMessages<IToPipes>(stream));
                 }
                 catch (Exception) { } // <- Ugly game jam code
+
                 lock (monitor) { tcpClient = null; }
+                invoke(() => AlchemistDisconnected?.Invoke());
 
                 // Accept a new client after this one quits
                 tcpListener.BeginAcceptTcpClient(AcceptClient, null);
@@ -64,16 +96,29 @@ namespace GlobalGameJam2018Networking
                     case ChatMessageToPipes chatMessage:
                         invoke(() => ReceivedMessage?.Invoke(chatMessage.Message));
                         break;
+                    case GameOver gameOver:
+                        invoke(() => GameOver?.Invoke(gameOver.Success));
+                        break;
+                    case SendMoneyMaker moneyMaker:
+                        invoke(() => ReceivedMoneyMaker?.Invoke(moneyMaker.MoneyMaker, moneyMaker.Pipe));
+                        break;
+                    case WelcomePlumberIAm welcome:
+                        invoke(() => AlchemistConnected?.Invoke(welcome.Username));
+                        break;
                 }
             }
         }
 
-        public override void SendMessage(string message)
+        private void SendMessage(IToAlchemy message)
         {
             lock (monitor)
             {
-                if (tcpClient != null) { SendMessage(tcpClient.GetStream(), new ChatMessageToAlchemy(message)); }
+                if(tcpClient != null && tcpClient.Connected) { SendMessage(tcpClient.GetStream(), message); }
             }
         }
+
+        public override void SendMessage(string message) => SendMessage(new ChatMessageToAlchemy(message));
+        public void StartLevel(LevelConfig config) => SendMessage(new StartLevel(config));
+        public void SendIngredient(Ingredient ingredient, Pipe pipe) => SendMessage(new SendIngredient(ingredient, pipe));
     }
 }

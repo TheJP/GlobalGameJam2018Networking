@@ -12,7 +12,20 @@ namespace GlobalGameJam2018Networking
 {
     public class AlchemyNetwork : NetworkBase
     {
+        public string Username { get; private set; }
+
         public override event Action<string> ReceivedMessage;
+
+        public event Action<string> Connected;
+
+        /// <summary>Called when the level is started by the plumber.</summary>
+        public event Action<LevelConfig> LevelStarted;
+
+        /// <summary>Called when an ingredient was recieved from the plumber.</summary>
+        public event Action<Ingredient, Pipe> ReceivedIngredient;
+
+        /// <summary>Called when the connection to the plumber was lost.</summary>
+        public event Action ServerStopped;
 
         private object monitor = new object();
 
@@ -26,8 +39,17 @@ namespace GlobalGameJam2018Networking
             lock (monitor)
             {
                 if (tcpClient != null) { throw new InvalidOperationException($"Can't connect {nameof(AlchemyNetwork)} multiple times"); }
+                Username = username;
                 tcpClient = new TcpClient();
                 tcpClient.BeginConnect(hostname, port, ServerConnected, null);
+            }
+        }
+
+        public void Disconnect()
+        {
+            lock (monitor)
+            {
+                if (tcpClient?.Connected ?? false) { tcpClient?.GetStream()?.Close(); }
             }
         }
 
@@ -39,11 +61,17 @@ namespace GlobalGameJam2018Networking
                 try
                 {
                     NetworkStream stream;
-                    lock (monitor) { stream = tcpClient.GetStream(); }
+                    lock (monitor)
+                    {
+                        stream = tcpClient.GetStream();
+                        SendMessage(new WelcomePlumberIAm(Username));
+                    }
                     Handle(ReadMessages<IToAlchemy>(stream));
                 }
                 catch (Exception) { } // <- Ugly game jam code
+
                 lock (monitor) { tcpClient = null; }
+                invoke(() => ServerStopped?.Invoke());
             }).Start();
         }
 
@@ -58,16 +86,29 @@ namespace GlobalGameJam2018Networking
                     case ChatMessageToAlchemy chatMessage:
                         invoke(() => ReceivedMessage?.Invoke(chatMessage.Message));
                         break;
+                    case SendIngredient ingredient:
+                        invoke(() => ReceivedIngredient?.Invoke(ingredient.Ingredient, ingredient.Pipe));
+                        break;
+                    case StartLevel startLevel:
+                        invoke(() => LevelStarted?.Invoke(startLevel.Config));
+                        break;
+                    case WelcomeAlchemistIAm welcome:
+                        invoke(() => Connected?.Invoke(welcome.Username));
+                        break;
                 }
             }
         }
 
-        public override void SendMessage(string message)
+        private void SendMessage(IToPipes message)
         {
             lock (monitor)
             {
-                if (tcpClient != null && tcpClient.Connected) { SendMessage(tcpClient.GetStream(), new ChatMessageToPipes(message)); }
+                if (tcpClient != null && tcpClient.Connected) { SendMessage(tcpClient.GetStream(), message); }
             }
         }
+
+        public override void SendMessage(string message) => SendMessage(new ChatMessageToPipes(message));
+        public void SendMoneyMaker(MoneyMaker moneyMaker, Pipe pipe) => SendMessage(new SendMoneyMaker(moneyMaker, pipe));
+        public void GameOver(bool success) => SendMessage(new GameOver(success));
     }
 }
