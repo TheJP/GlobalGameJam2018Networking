@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 using GlobalGameJam2018Networking.Protocol.MessageToAlchemy;
 using GlobalGameJam2018Networking.Protocol.MessageToPipes;
-using Newtonsoft.Json;
 
 namespace GlobalGameJam2018Networking
 {
@@ -37,7 +33,7 @@ namespace GlobalGameJam2018Networking
 
         private void AcceptClient(IAsyncResult result)
         {
-            new Thread(new ThreadStart(() =>
+            new Thread(() =>
             {
                 try
                 {
@@ -54,14 +50,14 @@ namespace GlobalGameJam2018Networking
 
                 // Accept a new client after this one quits
                 tcpListener.BeginAcceptTcpClient(AcceptClient, null);
-            })).Start();
+            }).Start();
         }
 
         /// <summary>Handles incomming messages. This method is running own the thread created in <see cref="AcceptClient(IAsyncResult)"/>.</summary>
         /// <param name="messages">Incomming messages.</param>
         private void Handle(IEnumerable<IToPipes> messages)
         {
-            foreach(var message in messages)
+            foreach (var message in messages)
             {
                 switch (message)
                 {
@@ -76,6 +72,7 @@ namespace GlobalGameJam2018Networking
         {
             lock (monitor)
             {
+                if (tcpClient != null) { SendMessage(tcpClient.GetStream(), new ChatMessageToAlchemy(message)); }
             }
         }
     }

@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlchemyNetwork.cs" />
     <Compile Include="Ingredient.cs" />
     <Compile Include="IngredientColour.cs" />
     <Compile Include="IItem.cs" />
