@@ -76,12 +76,16 @@ namespace GlobalGameJam2018Networking
                     Handle(ReadMessages<IToPipes>(stream));
                 }
                 catch (Exception) { } // <- Ugly game jam code
-
-                lock (monitor) { tcpClient = null; }
                 invoke(() => AlchemistDisconnected?.Invoke());
 
                 // Accept a new client after this one quits
-                tcpListener.BeginAcceptTcpClient(AcceptClient, null);
+
+                lock (monitor)
+                {
+                    tcpClient = null;
+                    try { tcpListener.BeginAcceptTcpClient(AcceptClient, null); }
+                    catch (Exception) { }
+                }
             }).Start();
         }
 

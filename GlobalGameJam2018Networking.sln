@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalGameJam2018Networking", "GlobalGameJam2018Networking.csproj", "{CA18208C-7928-4919-9284-893582287AAE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkTesting", "NetworkTesting\NetworkTesting.csproj", "{5290EB1C-42D2-44C1-8357-0D99E60818E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{CA18208C-7928-4919-9284-893582287AAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA18208C-7928-4919-9284-893582287AAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA18208C-7928-4919-9284-893582287AAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5290EB1C-42D2-44C1-8357-0D99E60818E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5290EB1C-42D2-44C1-8357-0D99E60818E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5290EB1C-42D2-44C1-8357-0D99E60818E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5290EB1C-42D2-44C1-8357-0D99E60818E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
