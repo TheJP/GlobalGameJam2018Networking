@@ -62,8 +62,14 @@
     <Compile Include="Protocol\IMessage.cs" />
     <Compile Include="Protocol\MessageToAlchemy\ChatMessageToAlchemy.cs" />
     <Compile Include="Protocol\MessageToAlchemy\IToAlchemy.cs" />
+    <Compile Include="Protocol\MessageToAlchemy\SendIngredient.cs" />
+    <Compile Include="Protocol\MessageToAlchemy\StartLevel.cs" />
+    <Compile Include="Protocol\MessageToAlchemy\WelcomeAlchemistIAm.cs" />
     <Compile Include="Protocol\MessageToPipes\ChatMessageToPipes.cs" />
+    <Compile Include="Protocol\MessageToPipes\GameOver.cs" />
     <Compile Include="Protocol\MessageToPipes\IToPipes.cs" />
+    <Compile Include="Protocol\MessageToPipes\SendMoneyMaker.cs" />
+    <Compile Include="Protocol\MessageToPipes\WelcomePlumberIAm.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
