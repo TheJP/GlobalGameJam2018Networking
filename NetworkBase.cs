@@ -30,7 +30,7 @@ namespace GlobalGameJam2018Networking
             {
                 TypeNameHandling = TypeNameHandling.All
             };
-            using (var reader = new StreamReader(stream))
+            using (var reader = new StreamReader(stream, Encoding.UTF8, false, 1024, true))
             using (var jsonTextReader = new JsonTextReader(reader))
             {
                 jsonTextReader.SupportMultipleContent = true;
@@ -47,7 +47,7 @@ namespace GlobalGameJam2018Networking
             {
                 TypeNameHandling = TypeNameHandling.All
             };
-            using (var writer = new StreamWriter(stream))
+            using (var writer = new StreamWriter(stream, Encoding.UTF8, 1024, true))
             {
                 serializer.Serialize(writer, message);
             }

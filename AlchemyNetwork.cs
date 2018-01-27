@@ -23,17 +23,23 @@ namespace GlobalGameJam2018Networking
 
         public void Connect(string username, string hostname, int port = DefaultPort)
         {
-            NetworkStream stream;
             lock (monitor)
             {
                 if (tcpClient != null) { throw new InvalidOperationException($"Can't connect {nameof(AlchemyNetwork)} multiple times"); }
-                tcpClient = new TcpClient(hostname, port);
-                stream = tcpClient.GetStream();
+                tcpClient = new TcpClient();
+                tcpClient.BeginConnect(hostname, port, ServerConnected, null);
             }
+        }
+
+        private void ServerConnected(IAsyncResult ar)
+        {
+            lock (monitor) { tcpClient.EndConnect(ar); }
             new Thread(() =>
             {
                 try
                 {
+                    NetworkStream stream;
+                    lock (monitor) { stream = tcpClient.GetStream(); }
                     Handle(ReadMessages<IToAlchemy>(stream));
                 }
                 catch (Exception) { } // <- Ugly game jam code
@@ -60,7 +66,7 @@ namespace GlobalGameJam2018Networking
         {
             lock (monitor)
             {
-                if (tcpClient != null) { SendMessage(tcpClient.GetStream(), new ChatMessageToPipes(message)); }
+                if (tcpClient != null && tcpClient.Connected) { SendMessage(tcpClient.GetStream(), new ChatMessageToPipes(message)); }
             }
         }
     }
