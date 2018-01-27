@@ -8,6 +8,7 @@ namespace NetworkTesting
 {
     static class Program
     {
+        public const int Port = 54045;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

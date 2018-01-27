@@ -24,7 +24,7 @@ namespace NetworkTesting
             {
                 Username = username;
                 Network = new PipesNetwork(action => this.Invoke(action));
-                Network.Start(username, 5504);
+                Network.Start(username, Program.Port);
 
                 Network.AlchemistConnected += u => Display($"-> {u} connected");
                 Network.AlchemistDisconnected += () => Display("-> Client disconnected");
@@ -41,7 +41,7 @@ namespace NetworkTesting
 
         private void Display(string text)
         {
-            infoText.Text = $"{text}\n{infoText.Text}";
+            infoText.Text = $"{text}\r\n{infoText.Text}";
         }
 
         private void startLevel_Click(object sender, EventArgs e)

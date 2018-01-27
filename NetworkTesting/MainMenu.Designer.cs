@@ -33,7 +33,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.address = new System.Windows.Forms.TextBox();
             this.clientUsername = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -91,7 +91,7 @@
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.textBox2);
+            this.groupBox2.Controls.Add(this.address);
             this.groupBox2.Controls.Add(this.clientUsername);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.label2);
@@ -103,15 +103,15 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Client / Alchemist";
             // 
-            // textBox2
+            // address
             // 
-            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.address.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2.Location = new System.Drawing.Point(67, 45);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(194, 20);
-            this.textBox2.TabIndex = 4;
-            this.textBox2.Text = "localhost";
+            this.address.Location = new System.Drawing.Point(67, 45);
+            this.address.Name = "address";
+            this.address.Size = new System.Drawing.Size(194, 20);
+            this.address.TabIndex = 4;
+            this.address.Text = "localhost";
             // 
             // clientUsername
             // 
@@ -180,7 +180,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button connect;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox address;
         private System.Windows.Forms.TextBox clientUsername;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;

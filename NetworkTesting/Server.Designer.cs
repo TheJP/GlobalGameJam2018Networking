@@ -51,13 +51,13 @@
             this.infoText.Multiline = true;
             this.infoText.Name = "infoText";
             this.infoText.ReadOnly = true;
-            this.infoText.Size = new System.Drawing.Size(434, 214);
+            this.infoText.Size = new System.Drawing.Size(446, 241);
             this.infoText.TabIndex = 0;
             // 
             // startLevel
             // 
             this.startLevel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.startLevel.Location = new System.Drawing.Point(347, 12);
+            this.startLevel.Location = new System.Drawing.Point(359, 12);
             this.startLevel.Name = "startLevel";
             this.startLevel.Size = new System.Drawing.Size(102, 23);
             this.startLevel.TabIndex = 1;
@@ -80,7 +80,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.levelName.Location = new System.Drawing.Point(82, 14);
             this.levelName.Name = "levelName";
-            this.levelName.Size = new System.Drawing.Size(259, 20);
+            this.levelName.Size = new System.Drawing.Size(271, 20);
             this.levelName.TabIndex = 3;
             // 
             // colour
@@ -114,7 +114,7 @@
             "Processed"});
             this.type.Location = new System.Drawing.Point(197, 43);
             this.type.Name = "type";
-            this.type.Size = new System.Drawing.Size(144, 21);
+            this.type.Size = new System.Drawing.Size(156, 21);
             this.type.TabIndex = 4;
             // 
             // label2
@@ -129,7 +129,7 @@
             // stop
             // 
             this.stop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.stop.Location = new System.Drawing.Point(347, 99);
+            this.stop.Location = new System.Drawing.Point(359, 99);
             this.stop.Name = "stop";
             this.stop.Size = new System.Drawing.Size(102, 23);
             this.stop.TabIndex = 1;
@@ -140,7 +140,7 @@
             // sendIngredient
             // 
             this.sendIngredient.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.sendIngredient.Location = new System.Drawing.Point(347, 41);
+            this.sendIngredient.Location = new System.Drawing.Point(359, 41);
             this.sendIngredient.Name = "sendIngredient";
             this.sendIngredient.Size = new System.Drawing.Size(102, 23);
             this.sendIngredient.TabIndex = 1;
@@ -151,7 +151,7 @@
             // sendChat
             // 
             this.sendChat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.sendChat.Location = new System.Drawing.Point(347, 70);
+            this.sendChat.Location = new System.Drawing.Point(359, 70);
             this.sendChat.Name = "sendChat";
             this.sendChat.Size = new System.Drawing.Size(102, 23);
             this.sendChat.TabIndex = 7;
@@ -165,7 +165,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chat.Location = new System.Drawing.Point(82, 72);
             this.chat.Name = "chat";
-            this.chat.Size = new System.Drawing.Size(259, 20);
+            this.chat.Size = new System.Drawing.Size(271, 20);
             this.chat.TabIndex = 3;
             // 
             // label3
@@ -181,7 +181,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(461, 354);
+            this.ClientSize = new System.Drawing.Size(473, 381);
             this.Controls.Add(this.sendChat);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);

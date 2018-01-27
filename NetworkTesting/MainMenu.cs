@@ -17,7 +17,7 @@ namespace NetworkTesting
 
         private void connect_Click(object sender, EventArgs e)
         {
-
+            new Client(clientUsername.Text, address.Text).Show();
         }
     }
 }
