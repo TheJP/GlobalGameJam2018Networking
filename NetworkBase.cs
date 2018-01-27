@@ -12,7 +12,7 @@ namespace GlobalGameJam2018Networking
     public abstract class NetworkBase
     {
         public const int DefaultPort = 505;
-
+        private const int DefaultBufferSize = 1024;
         protected readonly Action<Action> invoke;
 
         public abstract event Action<string> ReceivedMessage;
@@ -30,7 +30,7 @@ namespace GlobalGameJam2018Networking
             {
                 TypeNameHandling = TypeNameHandling.All
             };
-            using (var reader = new StreamReader(stream, Encoding.UTF8, false, 1024, true))
+            using (var reader = new StreamReader(stream, Encoding.UTF8, false, DefaultBufferSize, true))
             using (var jsonTextReader = new JsonTextReader(reader))
             {
                 jsonTextReader.SupportMultipleContent = true;
@@ -47,7 +47,7 @@ namespace GlobalGameJam2018Networking
             {
                 TypeNameHandling = TypeNameHandling.All
             };
-            using (var writer = new StreamWriter(stream, Encoding.UTF8, 1024, true))
+            using (var writer = new StreamWriter(stream, Encoding.UTF8, DefaultBufferSize, true))
             {
                 serializer.Serialize(writer, message);
             }

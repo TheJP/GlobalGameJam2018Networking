@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Linq;
+using System.Collections.Generic;
 
 namespace GlobalGameJam2018Networking
 {
@@ -11,14 +11,16 @@ namespace GlobalGameJam2018Networking
     {
         public string Name { get; }
         public uint Difficulty { get; }
-        private readonly List<Pipe> pipes;
-        public ReadOnlyCollection<Pipe> Pipes => pipes.AsReadOnly();
+        private readonly Dictionary<int, Pipe> pipes;
+        public IEnumerable<Pipe> Pipes => pipes.Values;
+
+        public Pipe this[int pipeIndex] => pipes[pipeIndex];
 
         private LevelConfig(string name, uint difficulty, List<Pipe> pipes)
         {
             Name = name;
             Difficulty = difficulty;
-            this.pipes = pipes;
+            this.pipes = pipes.ToDictionary(pipe => pipe.Id);
         }
 
         public static LevelConfigBuilder Builder(string name, uint difficulty = 1) => new LevelConfigBuilder(name, difficulty);
