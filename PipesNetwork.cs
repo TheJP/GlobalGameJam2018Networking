@@ -75,7 +75,7 @@ namespace GlobalGameJam2018Networking
                     }
                     Handle(ReadMessages<IToPipes>(stream));
                 }
-                catch (Exception) { } // <- Ugly game jam code
+                catch (Exception e) { Console.WriteLine(e.Message); } // <- Ugly game jam code
                 invoke(() => AlchemistDisconnected?.Invoke());
 
                 // Accept a new client after this one quits

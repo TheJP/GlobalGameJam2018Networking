@@ -24,7 +24,7 @@ namespace NetworkTesting
             {
                 Username = username;
                 Network = new PipesNetwork(action => this.Invoke(action));
-                Network.Start(username, Program.Port);
+                Network.Start(username, 54046);
 
                 Network.AlchemistConnected += u => Display($"-> {u} connected");
                 Network.AlchemistDisconnected += () => Display("-> Client disconnected");
@@ -89,6 +89,11 @@ namespace NetworkTesting
         private void sendChat_Click(object sender, EventArgs e)
         {
             Network.SendMessage(chat.Text);
+        }
+
+        private void Server_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Network.Stop();
         }
     }
 }

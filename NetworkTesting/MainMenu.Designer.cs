@@ -164,6 +164,7 @@
             this.MinimumSize = new System.Drawing.Size(307, 243);
             this.Name = "MainMenu";
             this.Text = "NetworkTesting";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainMenu_FormClosed);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

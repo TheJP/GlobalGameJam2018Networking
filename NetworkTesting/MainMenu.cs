@@ -19,5 +19,10 @@ namespace NetworkTesting
         {
             new Client(clientUsername.Text, address.Text).Show();
         }
+
+        private void MainMenu_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

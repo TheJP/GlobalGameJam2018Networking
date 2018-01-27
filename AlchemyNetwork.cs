@@ -68,7 +68,7 @@ namespace GlobalGameJam2018Networking
                     }
                     Handle(ReadMessages<IToAlchemy>(stream));
                 }
-                catch (Exception) { } // <- Ugly game jam code
+                catch (Exception ex) { Console.WriteLine(ex.Message); } // <- Ugly game jam code
 
                 lock (monitor) { tcpClient = null; }
                 invoke(() => ServerStopped?.Invoke());

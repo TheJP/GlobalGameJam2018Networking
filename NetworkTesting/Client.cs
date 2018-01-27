@@ -25,7 +25,7 @@ namespace NetworkTesting
             {
                 Username = username;
                 Network = new AlchemyNetwork(action => this.Invoke(action));
-                Network.Connect(username, address, Program.Port);
+                Network.Connect(username, address, 54046);
 
                 Network.Connected += u => Display($"-> Connected with Plumber {u}");
                 Network.LevelStarted += config => {
@@ -101,6 +101,11 @@ namespace NetworkTesting
             {
                 Display($"Exception: {ex.Message}");
             }
+        }
+
+        private void Client_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Network.Disconnect();
         }
     }
 }

@@ -197,6 +197,7 @@
             this.MinimumSize = new System.Drawing.Size(429, 195);
             this.Name = "Server";
             this.Text = "Server";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Server_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

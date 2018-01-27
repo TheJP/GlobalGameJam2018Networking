@@ -26,17 +26,26 @@ namespace GlobalGameJam2018Networking
 
         internal IEnumerable<T> ReadMessages<T>(NetworkStream stream) where T: IMessage
         {
-            var serializer = new JsonSerializer
+            //var serializer = new JsonSerializer
+            //{
+            //    TypeNameHandling = TypeNameHandling.All
+            //};
+            //using (var reader = new StreamReader(stream, Encoding.UTF8, false, DefaultBufferSize, true))
+            //using (var jsonTextReader = new JsonTextReader(reader))
+            //{
+            //    jsonTextReader.SupportMultipleContent = true;
+            //    while (jsonTextReader.Read())
+            //    {
+            //        if (serializer.Deserialize<IMessage>(jsonTextReader) is T message) { yield return message; }
+            //    }
+            //}
+            using (var reader = new StreamReader(stream, Encoding.UTF8, true, DefaultBufferSize, true))
             {
-                TypeNameHandling = TypeNameHandling.All
-            };
-            using (var reader = new StreamReader(stream, Encoding.UTF8, false, DefaultBufferSize, true))
-            using (var jsonTextReader = new JsonTextReader(reader))
-            {
-                jsonTextReader.SupportMultipleContent = true;
-                while (jsonTextReader.Read())
+                while (true)
                 {
-                    if (serializer.Deserialize<IMessage>(jsonTextReader) is T message) { yield return message; }
+                    var line = reader.ReadLine().Trim('\uFEFF');
+                    var o = JsonConvert.DeserializeObject(line, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
+                    if(o is T message) { yield return message; }
                 }
             }
         }
@@ -49,7 +58,10 @@ namespace GlobalGameJam2018Networking
             };
             using (var writer = new StreamWriter(stream, Encoding.UTF8, DefaultBufferSize, true))
             {
-                serializer.Serialize(writer, message);
+                var potential = JsonConvert.SerializeObject(message, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
+                writer.WriteLine(potential);
+                //serializer.Serialize(writer, message);
+                writer.Flush();
             }
         }
     }
