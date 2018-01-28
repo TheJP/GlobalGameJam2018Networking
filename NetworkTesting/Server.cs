@@ -83,17 +83,35 @@ namespace NetworkTesting
 
         private void stop_Click(object sender, EventArgs e)
         {
-            Network.Stop();
+            try
+            {
+                Network.Stop();
+            }
+            catch (Exception ex)
+            {
+                Display($"Exception: {ex.Message}");
+            }
         }
 
         private void sendChat_Click(object sender, EventArgs e)
         {
-            Network.SendMessage(chat.Text);
+            try
+            {
+                Network.SendMessage(chat.Text);
+            }
+            catch (Exception ex)
+            {
+                Display($"Exception: {ex.Message}");
+            }
         }
 
         private void Server_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Network.Stop();
+            try
+            {
+                Network.Stop();
+            }
+            catch (Exception) { }
         }
     }
 }

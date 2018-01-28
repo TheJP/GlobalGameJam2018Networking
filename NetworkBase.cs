@@ -26,19 +26,6 @@ namespace GlobalGameJam2018Networking
 
         internal IEnumerable<T> ReadMessages<T>(NetworkStream stream) where T: IMessage
         {
-            //var serializer = new JsonSerializer
-            //{
-            //    TypeNameHandling = TypeNameHandling.All
-            //};
-            //using (var reader = new StreamReader(stream, Encoding.UTF8, false, DefaultBufferSize, true))
-            //using (var jsonTextReader = new JsonTextReader(reader))
-            //{
-            //    jsonTextReader.SupportMultipleContent = true;
-            //    while (jsonTextReader.Read())
-            //    {
-            //        if (serializer.Deserialize<IMessage>(jsonTextReader) is T message) { yield return message; }
-            //    }
-            //}
             using (var reader = new StreamReader(stream, Encoding.UTF8, true, DefaultBufferSize, true))
             {
                 while (true)
@@ -61,7 +48,6 @@ namespace GlobalGameJam2018Networking
             {
                 var potential = JsonConvert.SerializeObject(message, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
                 writer.WriteLine(potential);
-                //serializer.Serialize(writer, message);
                 writer.Flush();
             }
         }

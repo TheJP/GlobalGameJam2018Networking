@@ -55,7 +55,7 @@ namespace GlobalGameJam2018Networking
                     if (tcpClient?.Connected ?? false) { tcpClient?.GetStream()?.Close(); }
                     tcpListener?.Stop();
                 }
-                catch (Exception) { } // <- Ugly game jam code
+                catch (Exception ex) { Console.Error.WriteLine(ex.Message); } // <- Ugly game jam code
             }
 
         }
@@ -75,7 +75,7 @@ namespace GlobalGameJam2018Networking
                     }
                     Handle(ReadMessages<IToPipes>(stream));
                 }
-                catch (Exception e) { Console.WriteLine(e.Message); } // <- Ugly game jam code
+                catch (Exception e) { Console.Error.WriteLine(e.Message); } // <- Ugly game jam code
                 invoke(() => AlchemistDisconnected?.Invoke());
 
                 // Accept a new client after this one quits
@@ -84,7 +84,7 @@ namespace GlobalGameJam2018Networking
                 {
                     tcpClient = null;
                     try { tcpListener.BeginAcceptTcpClient(AcceptClient, null); }
-                    catch (Exception) { }
+                    catch (Exception ex) { Console.Error.WriteLine(ex.Message); }
                 }
             }).Start();
         }
