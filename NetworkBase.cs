@@ -43,7 +43,8 @@ namespace GlobalGameJam2018Networking
             {
                 while (true)
                 {
-                    var line = reader.ReadLine().Trim('\uFEFF');
+                    var line = reader.ReadLine()?.Trim('\uFEFF');
+                    if(line == null) { break; }
                     var o = JsonConvert.DeserializeObject(line, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
                     if(o is T message) { yield return message; }
                 }

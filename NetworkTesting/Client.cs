@@ -58,8 +58,8 @@ namespace NetworkTesting
             try
             {
                 Network.SendMoneyMaker(
-                    new MoneyMaker(moneyName.Text, int.Parse(goldValue.Text), (ItemType)Enum.Parse(typeof(ItemType), type.Text)),
-                    LevelConfig.Pipes.Where(p => p.Direction == PipeDirection.ToPipes).First());
+                    new MoneyMaker(moneyName.Text, int.Parse(goldValue.Text), (ItemType)Enum.Parse(typeof(ItemType), type.SelectedItem.ToString())),
+                    LevelConfig.PipesDictionary.Values.Where(p => p.Direction == PipeDirection.ToPipes).First());
             }
             catch (Exception ex)
             {

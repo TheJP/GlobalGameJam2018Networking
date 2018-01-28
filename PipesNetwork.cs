@@ -122,7 +122,7 @@ namespace GlobalGameJam2018Networking
         }
 
         public override void SendMessage(string message) => SendMessage(new ChatMessageToAlchemy(message));
-        public void StartLevel(LevelConfig config) => SendMessage(new StartLevel(config));
+        public void StartLevel(LevelConfig config) => SendMessage(new StartLevel(config.ToMutable()));
         public void SendIngredient(Ingredient ingredient, Pipe pipe) => SendMessage(new SendIngredient(ingredient, pipe));
     }
 }

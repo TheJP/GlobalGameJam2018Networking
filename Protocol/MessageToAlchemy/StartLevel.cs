@@ -2,9 +2,9 @@
 {
     internal class StartLevel : IToAlchemy
     {
-        public LevelConfig Config { get; }
+        public LevelConfigMutable Config { get; }
 
-        public StartLevel(LevelConfig config)
+        public StartLevel(LevelConfigMutable config)
         {
             Config = config;
         }

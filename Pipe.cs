@@ -11,7 +11,7 @@
         /// </summary>
         public int Order { get; }
 
-        internal Pipe(int id, PipeDirection direction, int order)
+        public Pipe(int id, PipeDirection direction, int order)
         {
             Id = id;
             Direction = direction;

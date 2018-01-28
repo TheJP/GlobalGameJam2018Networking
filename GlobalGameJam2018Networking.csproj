@@ -60,6 +60,7 @@
     <Compile Include="PipesNetwork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Protocol\IMessage.cs" />
+    <Compile Include="Protocol\LevelConfigMutable.cs" />
     <Compile Include="Protocol\MessageToAlchemy\ChatMessageToAlchemy.cs" />
     <Compile Include="Protocol\MessageToAlchemy\IToAlchemy.cs" />
     <Compile Include="Protocol\MessageToAlchemy\SendIngredient.cs" />

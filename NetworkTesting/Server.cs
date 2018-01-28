@@ -71,9 +71,9 @@ namespace NetworkTesting
                 }
                 Network.SendIngredient(
                     new Ingredient(
-                        (ItemType)Enum.Parse(typeof(ItemType), type.SelectedText),
-                        (IngredientColour)Enum.Parse(typeof(IngredientColour), colour.SelectedText)),
-                    LevelConfig.Pipes.Where(p => p.Direction == PipeDirection.ToAlchemist).First());
+                        (ItemType)Enum.Parse(typeof(ItemType), type.SelectedItem.ToString()),
+                        (IngredientColour)Enum.Parse(typeof(IngredientColour), colour.SelectedItem.ToString())),
+                    LevelConfig.PipesDictionary.Values.Where(p => p.Direction == PipeDirection.ToAlchemist).First());
             }
             catch (Exception ex)
             {

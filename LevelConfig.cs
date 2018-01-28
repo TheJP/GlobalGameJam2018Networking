@@ -1,5 +1,8 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System;
+using GlobalGameJam2018Networking.Protocol;
 
 namespace GlobalGameJam2018Networking
 {
@@ -13,8 +16,7 @@ namespace GlobalGameJam2018Networking
         public uint Difficulty { get; }
         private readonly Dictionary<int, Pipe> pipes;
         public IEnumerable<Pipe> Pipes => pipes.Values;
-
-        public Pipe this[int pipeIndex] => pipes[pipeIndex];
+        public IReadOnlyDictionary<int, Pipe> PipesDictionary => new ReadOnlyDictionary<int, Pipe>(pipes);
 
         private LevelConfig(string name, uint difficulty, List<Pipe> pipes)
         {
@@ -22,6 +24,7 @@ namespace GlobalGameJam2018Networking
             Difficulty = difficulty;
             this.pipes = pipes.ToDictionary(pipe => pipe.Id);
         }
+
 
         public static LevelConfigBuilder Builder(string name, uint difficulty = 1) => new LevelConfigBuilder(name, difficulty);
 
@@ -45,5 +48,8 @@ namespace GlobalGameJam2018Networking
 
             public LevelConfig Create() => new LevelConfig(name, difficulty, pipes);
         }
+
+        internal LevelConfigMutable ToMutable() => new LevelConfigMutable(Name, Difficulty, pipes.Values.ToDictionary(p => p.Id));
+        internal static LevelConfig FromMutable(LevelConfigMutable mutable) => new LevelConfig(mutable.Name, mutable.Difficulty, mutable.Pipes.Values.ToList());
     }
 }

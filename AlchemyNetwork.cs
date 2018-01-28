@@ -90,7 +90,7 @@ namespace GlobalGameJam2018Networking
                         invoke(() => ReceivedIngredient?.Invoke(ingredient.Ingredient, ingredient.Pipe));
                         break;
                     case StartLevel startLevel:
-                        invoke(() => LevelStarted?.Invoke(startLevel.Config));
+                        invoke(() => LevelStarted?.Invoke(LevelConfig.FromMutable(startLevel.Config)));
                         break;
                     case WelcomeAlchemistIAm welcome:
                         invoke(() => Connected?.Invoke(welcome.Username));
